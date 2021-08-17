@@ -88,6 +88,7 @@ class Context:
     properties = None
     retries = 0
     reply_to = None
+    is_replacing = False
     root_id = None
     shadow = None
     taskset = None   # compat alias to group
@@ -128,6 +129,7 @@ class Context:
             'headers': self.headers,
             'retries': self.retries,
             'reply_to': self.reply_to,
+            'is_replacing': self.is_replacing,
             'origin': self.origin,
         }
 
@@ -921,6 +923,8 @@ class Task:
             group_id=self.request.group,
             group_index=self.request.group_index,
             root_id=self.request.root_id,
+            parent_id=self.request.id,
+            is_replacing=True
         )
         # If the task being replaced is part of a chain, we need to re-create
         # it with the replacement signature - these subsequent tasks will
